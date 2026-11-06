@@ -1,5 +1,4 @@
-"""Estatísticas e relatório em texto — Projeto 1, Técnicas de Programação."""
-
+"""Estatísticas e relatório em texto - Projeto 1, Técnicas de Programação."""
 
 def resumir(valores):
     """Retorna {"minimo", "maximo", "media", "soma"} de uma lista de números.
@@ -7,16 +6,30 @@ def resumir(valores):
     Lista vazia NÃO é erro de programa: é um sensor que não mediu nada no período.
     Nesse caso, retorna None.
     """
-    pass  # ← implemente aqui
+    if not valores:
+        return None
+
+    minimo = min(valores)
+    maximo = max(valores)
+    soma = sum(valores)
+    media = round(soma / len(valores), 2)
+
+    return {
+        "minimo": minimo,
+        "maximo": maximo,
+        "media": media,
+        "soma": soma
+    }
 
 
 def contar_motivos(invalidas):
-    """Conta quantas leituras inválidas há por motivo.
-
-    Recebe a lista de tuplas (leitura, nome_da_excecao) devolvida por validar_lote.
-    Ex.: {"ErroCampoAusente": 12, "ErroLeituraInvalida": 1}
-    """
-    pass  # ← implemente aqui
+    contagem = {}
+    for leitura, motivo in invalidas:
+        if motivo in contagem:
+            contagem[motivo] += 1
+        else:
+            contagem[motivo] = 1
+    return contagem
 
 
 def formatar_linha_variavel(apelido, unidade, validas, invalidas):
@@ -33,5 +46,5 @@ def formatar_linha_variavel(apelido, unidade, validas, invalidas):
 
 
 def salvar_relatorio(caminho, texto):
-    """Grava o relatório em UTF-8."""
-    pass  # ← implemente aqui
+    with open(caminho, "w", encoding="utf-8") as arquivo:
+        arquivo.write(texto)
