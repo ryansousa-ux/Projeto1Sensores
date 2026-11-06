@@ -29,7 +29,15 @@ def converter_leitura(texto):
     - campo vazio (ou só espaços)  -> lança ErroCampoAusente
     - texto que não é número       -> lança ErroTipoInvalido
     """
-    pass  # ← implemente aqui
+    if not texto or not texto.strip():
+        raise ErroCampoAusente("Campo vazio")
+    
+    texto_ajustado = texto.replace(",", ".")
+    
+    try:
+        return float(texto_ajustado)
+    except ValueError:
+        raise ErroTipoInvalido("O valor não é um número válido")
 
 
 def validar_tipo(valor):
