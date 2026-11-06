@@ -13,6 +13,7 @@ ENCODING = "latin-1"
 
 # Apelido curto -> nome exato da coluna no CSV do INMET
 COLUNAS = {
+    "data": "Data",
     "temperatura": "TEMPERATURA DO AR - BULBO SECO, HORARIA (°C)",
     "umidade": "UMIDADE RELATIVA DO AR, HORARIA (%)",
     "chuva": "PRECIPITAÇÃO TOTAL, HORÁRIO (mm)",
@@ -30,7 +31,22 @@ def ler_metadados(caminho):
     Ex.: {"REGIAO": "NE", "UF": "MA", "ESTACAO": "SAO LUIS", "CODIGO (WMO)": "A203", ...}
     Lança ErroFormatoArquivo se alguma dessas linhas não tiver o formato "CHAVE:;valor".
     """
-    pass  # ← implemente aqui
+    metadados = {}
+    
+    with open(caminho, mode="r", encoding=ENCODING) as arquivo:
+        for _ in range(LINHAS_METADADOS):
+            linha = arquivo.readline()
+            
+            if ":;" not in linha:
+                raise ErroFormatoArquivo("Formato de metadados invalido")
+            
+            partes = linha.split(":;", 1)
+            chave = partes[0].strip()
+            valor = partes[1].strip()
+            
+            metadados[chave] = valor
+            
+    return metadados
 
 
 def ler_registros(caminho):
@@ -39,7 +55,21 @@ def ler_registros(caminho):
     Os valores continuam como TEXTO (a conversão é papel do módulo validadores).
     Lança ErroFormatoArquivo se faltar no cabeçalho alguma coluna de COLUNAS.
     """
-    pass  # ← implemente aqui
+    registros = []
+    with open(caminho, mode="r", encoding=ENCODING) as arquivo:
+        for _ in range(LINHAS_METADADOS):
+            arquivo.readline()
+            
+        leitor = csv.DictReader(arquivo, delimiter=";")
+        
+        for nome_coluna in COLUNAS.values():
+            if nome_coluna not in leitor.fieldnames:
+                raise ErroFormatoArquivo(f"Coluna ausente: {nome_coluna}")
+                
+        for registro in leitor:
+            registros.append(registro)
+            
+    return registros
 
 
 def extrair_coluna(registros, apelido):
@@ -47,7 +77,17 @@ def extrair_coluna(registros, apelido):
 
     Lança KeyError se o apelido não existir em COLUNAS.
     """
-    pass  # ← implemente aqui
+    if apelido not in COLUNAS:
+        raise KeyError(f"Apelido invalido: {apelido}")
+        
+    nome_coluna = COLUNAS[apelido]
+    valores = []
+    
+    for registro in registros:
+        texto = registro[nome_coluna]
+        valores.append(texto)
+        
+    return valores
 
 
 def agrupar_por_mes(registros, apelido):
@@ -55,4 +95,12 @@ def agrupar_por_mes(registros, apelido):
 
     A data vem na coluna "Data" no formato "2025/01/31".
     """
-    pass  # ← implemente aqui
+    grupos = {}
+    for registro in registros:
+        texto_data = registro[COLUNAS["data"]]
+        mes = texto_data[0:7]
+        if mes not in grupos:
+            grupos[mes] = []
+        grupos[mes].append(registro)
+    
+    return grupos
