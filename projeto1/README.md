@@ -262,3 +262,4 @@ renderizar na página do GitHub**:
 
 ---
 IFMA — Monte Castelo · Técnicas de Programação · Prof. Claudio Fernandes
+Projeto desenvolvido por Ryan Silva - Engenharia Elétrica
