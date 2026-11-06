@@ -45,7 +45,10 @@ def validar_tipo(valor):
 
     Atenção: bool é subclasse de int em Python, mas True não é leitura de sensor.
     """
-    pass  # ← implemente aqui
+    if isinstance(valor, bool) or not isinstance(valor, (int, float)):
+        raise ErroTipoInvalido("O valor deve ser numérico (int ou float)")
+    
+    return True
 
 
 def validar_faixa(valor, minimo=0, maximo=1000):
