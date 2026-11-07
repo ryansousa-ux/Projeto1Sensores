@@ -1,0 +1,27 @@
+Estação SAO LUIS (A203) — MA
+Registros horários lidos: 8760
+
+== Resumo anual ==
+temperatura  °C    min    20.3  max    33.2  media   26.32  validas  8733/8760
+                   motivos: {'ErroCampoAusente': 27}
+umidade      %     min    42.0  max   100.0  media   80.21  validas  8733/8760
+                   motivos: {'ErroCampoAusente': 27}
+chuva        mm    min     0.0  max    42.0  media    0.23  validas  8732/8760
+                   motivos: {'ErroCampoAusente': 28}
+vento        m/s   min     0.0  max     5.1  media    1.35  validas  6100/8760
+                   motivos: {'ErroCampoAusente': 2660}
+
+== Mês a mês ==
+mês      temp. média (°C)  chuva total (mm)  vento médio (m/s)
+2025/01             26.36             202.2                1.7
+2025/02             24.24             494.6               1.33
+2025/03             23.75             526.4               1.28
+2025/04             24.91             302.4                1.1
+2025/05             25.76             218.6               0.95
+2025/06             26.87              67.6               1.29
+2025/07             26.35              93.2               1.13
+2025/08             26.97              24.0               1.73
+2025/09             27.48               3.0               2.23
+2025/10             27.68               0.0          SEM DADOS
+2025/11             27.83               0.8          SEM DADOS
+2025/12             27.49              75.0          SEM DADOS

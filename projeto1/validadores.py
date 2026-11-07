@@ -32,6 +32,7 @@ def validar_tipo(item):
 
 def validar_faixa(valor, minimo=0, maximo=1000):
     """Verifica se o valor está dentro de [minimo, maximo]. Lança ErroLeituraInvalida caso não esteja."""
+    valor = converter_leitura(valor)
     if valor < minimo or valor > maximo:
         raise ErroLeituraInvalida("Valor fora da faixa permitida")
 

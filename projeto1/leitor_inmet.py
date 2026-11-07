@@ -101,6 +101,6 @@ def agrupar_por_mes(registros, apelido):
         mes = texto_data[0:7]
         if mes not in grupos:
             grupos[mes] = []
-        grupos[mes].append(registro)
+        grupos[mes].append(texto_valor := registro[COLUNAS[apelido]])
     
     return grupos
