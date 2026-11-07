@@ -190,7 +190,7 @@ chore: adiciona arquivos iniciais do Projeto 1
 ## 6. O seu README.md
 
 Substitua este enunciado por um README seu, com:
-
+ 
 1. Ryan Silva de Sousa, 20261EE0009, Engenharia Industrial Elétrica
 2. O sistema lê arquivos CSV com dados meteorológicos do INMET (estação de São Luís/MA), realiza o tratamento e validação defensiva de leituras individuais e em lote (identificando ausências de dados ou valores fora dos limites físicos) e gera um relatório consolidado com médias, mínimos, máximos e dados mensais de temperatura, umidade, chuva e vento.
 > [!WARNING]
