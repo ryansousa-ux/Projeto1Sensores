@@ -1,3 +1,10 @@
+<div align="center">
+
+![Python](https://img.shields.io/badge/python-v3.12-blue)
+![Status](https://img.shields.io/badge/status-concluido-green)
+![IFMA](https://img.shields.io/badge/IFMA-Monte%20Castelo-red)
+
+</div>
 # Projeto 1 — Validação de Dados Reais de uma Estação Meteorológica
 
 | Campo | Valor |
@@ -184,16 +191,63 @@ chore: adiciona arquivos iniciais do Projeto 1
 
 Substitua este enunciado por um README seu, com:
 
-1. **Título e identificação** (nome, matrícula, curso).
-2. **O que o programa faz**, em 2 a 4 frases suas.
-3. **Como executar** (os comandos da §3).
-4. **Resultado**: a saída do `verificar.py` e um trecho do `relatorio.txt`.
-5. **Decisões**: duas ou três escolhas que você fez e por quê. Por exemplo: por que vazio
-   e texto inválido são exceções diferentes, ou o que o relatório mostra quando o sensor
-   de vento não mediu nada no mês.
-6. **Uso de IA**: qual ferramenta usou (Copilot, ChatGPT, Gemini...), para quê, e o que
-   você recusou ou corrigiu no que ela sugeriu. Se não usou, escreva isso. Esta seção
-   substitui o diário de bordo neste projeto.
+1. Ryan Silva de Sousa, 20261EE0009, Engenharia Industrial Elétrica
+2. O sistema lê arquivos CSV com dados meteorológicos do INMET (estação de São Luís/MA), realiza o tratamento e validação defensiva de leituras individuais e em lote (identificando ausências de dados ou valores fora dos limites físicos) e gera um relatório consolidado com médias, mínimos, máximos e dados mensais de temperatura, umidade, chuva e vento.
+> [!WARNING]
+> **Atenção:** Os dados do anemômetro (sensor de vento) da estação meteorológica de São Luís (A203) apresentaram ausência de medições (`SEM DADOS`) entre os meses de outubro e dezembro de 2025.
+### Fluxo de Processamento
+
+```mermaid
+graph TD
+    A[main.py] --> B[leitor_inmet.py]
+    B --> C[validadores.py]
+    C --> D[relatorio.py]
+3. python verificar.py
+   python main.py
+4. [validadores]
+  ✅ converter '27,5' -> 27.5
+  ✅ converter ' 0 ' -> 0.0
+  ✅ converter '' lança ErroCampoAusente
+  ✅ converter 'abc' lança ErroTipoInvalido
+  ✅ exceções herdam de ErroDeSensor
+  ✅ validar_tipo('5') lança ErroTipoInvalido
+  ✅ validar_tipo(True) lança ErroTipoInvalido
+  ✅ validar_faixa(500) retorna 500
+  ✅ validar_faixa(-1) lança ErroLeituraInvalida
+  ✅ validar_faixa nos limites é válido
+  ✅ validar_lote: válidas
+  ✅ validar_lote: inválidas
+
+[leitor_inmet]
+  ✅ metadados: estação
+  ✅ metadados: código
+  ✅ 8760 registros horários
+  ✅ primeira temperatura é '27,5'
+  ✅ apelido inexistente lança KeyError
+  ✅ 12 meses agrupados, em ordem
+  ✅ fevereiro tem 672 horas
+  ✅ arquivo errado lança ErroFormatoArquivo
+  ✅ arquivo inexistente lança FileNotFoundError
+
+[relatorio]
+  ✅ resumir([]) retorna None
+  ✅ resumir([1, 2, 4])
+  ✅ contar_motivos
+  ✅ salvar_relatorio grava em UTF-8
+
+Resultado: 25/25 testes passaram
+
+Estação SAO LUIS (A203) — MA
+Registros horários lidos: 8760
+
+5. Decidi chamar converter_leitura() logo no início de validar_faixa() para tratar dados brutos em formato de texto (ex: "27,4") antes de realizar comparações numéricas, evitando que exceções de tipo (TypeError) quebrassem a execução.
+
+Foram criadas exceções customizadas herdeiras de ErroDeSensor (ErroCampoAusente, ErroTipoInvalido, ErroLeituraInvalida) para categorizar com precisão a causa de cada falha de medição no relatório final.
+6. Ferramenta: Gem da Disciplina
+
+Apoio na checagem de erros, entendimento da estrutura de dados do INMET e orientação no fluxo de versionamento Git/GitHub.
+
+Recusei sugestões iniciais de alterar o arquivo main.py (pois ele era somente leitura) e optei por aplicar o tratamento defensivo diretamente dentro dos módulos de validação, além de ajustar manualmente a chave de coluna na extração dos dicionários de leitura.
 
 A regra para a IA é a mesma das aulas práticas: **leia tudo o que ela gerar antes de
 aceitar**, e peça a explicação de qualquer trecho que você não entendeu. O Copilot em modo
@@ -262,4 +316,4 @@ renderizar na página do GitHub**:
 
 ---
 IFMA — Monte Castelo · Técnicas de Programação · Prof. Claudio Fernandes
-Projeto desenvolvido por Ryan Silva - Engenharia Elétrica
+Projeto desenvolvido por Ryan Silva - Engenharia Industrial Elétrica
