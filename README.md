@@ -202,6 +202,7 @@ graph TD
     A[main.py] --> B[leitor_inmet.py]
     B --> C[validadores.py]
     C --> D[relatorio.py]
+```
 3. python verificar.py
    python main.py
 4. [validadores]
